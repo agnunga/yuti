@@ -1,0 +1,98 @@
+#me{
+	background-image: url(./img/datingbg.jpg);
+	background-repeat: no-repeat;
+}
+#welcome{
+	text-align: center;
+	position: relative;
+	color: white;
+}
+#welcome h1{
+	/*font-family: elephant;*/
+}
+.navbar ul li a{
+	color: white;
+}
+.navbar a{
+	color: white
+}
+.navbar{
+	padding: 5px;
+}
+#shadow{
+	box-shadow: 4px 10px 15px grey;
+}
+body{
+	background-color: #cccccc;
+}
+#box .w3-card{
+	border-radius: 10px;
+}
+#tabs li a{
+	background-color: #cccccc;
+}
+#tabs li a:hover{
+	background-color: #9c28b1;
+	color: white;
+}
+#footer ul li{
+	display: inline;
+	color: white;
+	border-right: 2px solid white;
+	padding-right: 10px;
+}
+h3{
+  /*font-family: Open Sans Condensed;*/
+  font-style: normal;
+  font-weight: 700;
+  text-shadow: 2px 2px 2px black;
+  color: white;
+  padding-bottom: 20px;
+}
+#free{
+  /*font-family: Open Sans Condensed;*/
+  font-style: normal;
+  font-size: 1.5em;
+  text-shadow: 2px 2px 2px black;
+  color: white;
+  padding-bottom: 20px;
+	
+}
+.links a{
+	padding: 10px;
+	border: 2px solid white;
+	border-radius: 5px;
+	color: white;
+	text-shadow: 2px 2px 2px black;
+	background-color:rgba(0,0,0,0.1);
+	text-decoration: none;
+}
+.links a:hover{
+	background-color:rgba(0,0,0,0.3);
+}
+.links{
+	border: 2px solid white;
+	border-radius: 5px;
+}
+table{
+	border-collapse: collapse;
+}
+ul li a:hover{
+	border-radius: 5px;
+}
+.join:hover{
+	background-color:rgba(0,0,0,0.3);
+}
+#collapse li a:hover{
+	background-color:rgba(0,0,0,0.3);
+}
+#welcome a{
+	background-color: #ea6262;color: white;padding: 15px 30px;font-weight: bold;
+	/*font-family: Open Sans Condensed;*/
+}
+#welcome a:hover{
+	background-color:rgba(220,0,0,0.6);
+}
+.pro{
+	border-bottom: 5px solid grey;
+}
