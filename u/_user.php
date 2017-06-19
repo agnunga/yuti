@@ -27,23 +27,66 @@ class User {
 
     function viewMatch() {
         global $db;
-//        $myDob = explode("/", $data['dob']);
-//        $matchMinAge = date('Y') - $myDob[2];
-//        $matchMaxAge = date('Y') - $myDob[2];
-//        $minDob = date('Y') - $data['min_age'];
-//        $maxDob = date("Y") - $data['max_age'];
-//        $query = "SELECT *  FROM users WHERE dob BETWEEN ? AND ? AND min_age = ? AND max_age = ?";
-//        $type_array = array('s', 's', 's', 's');
-//        $data = array($matchMinAge, $matchMaxAge, $minDob, $maxDob);
-
-        $query = "SELECT *  FROM users";
-        $type_array = array();
+        $where = "";
+        $type = array();
         $data = array();
-        $res = $db->select($query, $type_array, $data);
+
+        $where2 = " WHERE gender = ? OR gender = ? AND id != ?";
+        $type2 = array('i', 'i', 'i');
+
+        $where4 = " WHERE gender = ? OR gender = ? OR gender = ? OR gender = ?  AND id != ? ";
+        $type4 = array('i', 'i', 'i', 'i', 'i');
+
+        switch ($_SESSION['interest']) {
+
+            case 1: {
+                    $where = $where2;
+                    $type = $type2;
+                    $data = array(4, 6, $_SESSION['user_id']);
+                    break;
+                } case 2: {
+                    $where = $where2;
+                    $type = $type2;
+                    $data = array(2, 3, $_SESSION['user_id']);
+                    break;
+                } case 3: {
+                    $where = $where4;
+                    $type = $type4;
+                    $data = array(2, 3, 4, 6, $_SESSION['user_id']);
+                    break;
+                } case 4: {
+                    $where = $where2;
+                    $type = $type2;
+                    $data = array(1, 3, $_SESSION['user_id']);
+                    break;
+                } case 5: {
+                    $where = $where2;
+                    $type = $type2;
+                    $data = array(5, 6, $_SESSION['user_id']);
+                    break;
+                } case 6: {
+                    $where = $where4;
+                    $type = $type4;
+                    $data = array(1, 3, 5, 6, $_SESSION['user_id']);
+                    break;
+                } default : {
+                    
+                }
+        }
+
+//        echo 'G ' . $_SESSION['interest'] . ' <br/>';
+//        echo '$where ' . $where . ' <br/>';
+//        echo '$type ';
+//        print_r($type);
+//        echo '$data ';
+//        print_r($data);
+
+        $query = "SELECT *  FROM users " . $where;
+        $res = $db->select($query, $type, $data);
         if (!empty($res)) {
             return $res;
         } else {
-            echo 'No records found';
+            echo 'No match found';
         }
     }
 
@@ -106,17 +149,95 @@ class User {
         }
     }
 
-    public function confirmPayment($data) {
+    public function isRecordInAPI($transaction_id) {
         global $db;
-        $query = "INSERT INTO claimed_payments (user_id, phone, email, amount, transaction_no, payment_mode, payment_time) "
-                . " VALUES (?,?,?,?,?,?, CURRENT_TIMESTAMP) ";
-
-        $type_array = array('i', 's', 's', 's', 's', 's');
-
-        if ($db->insert($query, $type_array, $data) == 1) {
-            Redirect::to("index.php?sub=1");
+        $query = "SELECT *  FROM api_payments where transaction_no = ? AND claimed = 0";
+        $type_array = array('s');
+        $data = array($transaction_id);
+        $res = $db->select($query, $type_array, $data);
+        if (!empty($res)) {
+            return $res;
         } else {
-            echo "Subscription failed!";
+            return null;
+        }
+    }
+
+    public function confirmPayment($data) {
+
+        global $user;
+        $transaction_id = $data[4];
+        if ($user->isRecordInAPI($transaction_id) != null) {
+            global $db;
+            $query = "INSERT INTO claimed_payments (user_id, phone, email, amount, transaction_no, payment_mode, payment_time) "
+                    . " VALUES (?,?,?,?,?,?, CURRENT_TIMESTAMP) ";
+
+            $type_array = array('i', 's', 's', 's', 's', 's');
+
+            if ($db->insert($query, $type_array, $data) == 1) {
+                $query = "UPDATE api_payments SET claimed = 1 WHERE transaction_no = ?";
+                $type_array = array('s');
+                $data = array($transaction_id);
+                $res = $db->update($query, $type_array, $data);
+                if ($res != null) {
+                    if (isset($_SESSION['go_to']) && $_SESSION['go_to'] != "") {
+                        Redirect::to($_SESSION['go_to']);
+                    } else {
+                        Redirect::to("index.php?sub=1");
+                    }
+                } else {
+                    Redirect::to("index.php?sub=0");
+                }
+            } else {
+                echo "Subscription failed!";
+            }
+        } else {
+            echo 'Failed!Confirm Transaction Number and try again';
+            return FALSE;
+        }
+    }
+
+    function viewPayment() {
+        global $db;
+        $query = "SELECT *  FROM claimed_payments where user_id = ?";
+        $type_array = array('i');
+        $user_id = $_SESSION['user_id'];
+        $data = array($user_id);
+        $res = $db->select($query, $type_array, $data);
+        if (!empty($res)) {
+            return $res;
+        } else {
+            return null;
+        }
+    }
+
+    function isSubscriptionActive() {
+        global $user;
+        if ($user->viewPayment() != null) {
+            $_SESSION["subscription"] = 'premium';
+            return true;
+        } else {
+            $_SESSION["subscription"] = '
+
+
+
+
+
+
+
+
+
+                
+
+          
+
+        
+
+          
+
+        
+
+        ';
+            return FALSE;
         }
     }
 

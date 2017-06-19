@@ -1,4 +1,4 @@
-<div class = "modal fade" id="subscribe_modal" role = "dialog" data-backdrop = "true" data-keyboard = "false" data-show = "true">
+<div class = "modal fade" id="subscribe_modal" role = "dialog" data-backdrop = "true" data-keyboard = "true" data-show = "true">
     <div class = "modal-dialog">
         <div class = "modal-content modal-lg" style="margin: auto; width: 500px;">
 <!--            <div class = "modal-header">

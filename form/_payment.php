@@ -42,18 +42,7 @@
                         <option value="3">Bank</option>
                     </select>
                 </div><!--End of col-sm-9-->
-            </div><!--End of form group-->
-            
-            <div class="form-group"> 
-                <span>
-                    <label>
-                        <input type="checkbox"name="accept" required class="col-sm-1"> 
-                        <p class="col-sm-11"  style="font: 12px; font-weight: 200; text-align: left;">
-                            I accept terms and conditions, privacy policy and cookie policy. 
-                         </p>
-                    </label> 
-                </span>
-            </div><!--end of form-group-->
+            </div><!--End of form group--> 
             <div class="form-group">
                 <input type="submit"name="confirm"value="Confirm Payment" class="pull-right" style="background-color: #ffc728;padding: 5px;border: 5px ridge #ffc728;border-radius: 5px;margin-right: 20px;"/>
             </div><!--end of form-group-->

@@ -15,13 +15,17 @@ class Guest {
 
     function login($data) {
         global $db;
-        $query = "SELECT email, password  FROM users WHERE email = ? AND password = ?";
+        $query = "SELECT id, fullname, gender, email, password  FROM users WHERE email = ? AND password = ?";
         $type_array = array('s', 's');
 
         $res = $db->select($query, $type_array, $data);
         if (!empty($res)) {
             foreach ($res as $row) {
+                $_SESSION['user_id'] = $row['id'];
                 $_SESSION["email"] = $row['email'];
+                $_SESSION['interest'] = $row['gender'];
+                $fullname = explode(" ", $row['fullname']);
+                $_SESSION['first_name'] = $fullname[0];
                 echo 'Login success';
                 Redirect::to("./u");
             }
